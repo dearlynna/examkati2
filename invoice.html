@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furnish Store</title>
+<style type="text/css"> 
+
+body 
+{
+    margin: 0;
+    font-family: "Times New Roman", Times, serif;
+    background-color: white;
+}
+
+.header
+{
+    background-color: #5d4037;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+
+.logo
+{
+    font-size: 28px;
+    font-weight: bold;
+    color:white;
+}
+
+a:link {color: white;}
+a:visited {color: white;}
+a:hover {color: rgb(120, 51, 51);}
+a:active {color: black;}
+
+.navbar
+{
+    font-size: 18px;
+    text-align: right;
+    word-spacing: 10px;
+}
+
+.nav-link
+{
+    text-decoration: none;
+    margin-right: 50px;
+}
+
+.container
+{
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+section#invoice {
+      background: #f7f3eb;
+      border: 2px solid #8c7650;
+      padding: 2rem 2.5rem;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(75,58,38,0.11);
+      font-size: 1.2rem;
+    }
+    section#invoice h2 {
+      margin-top: 0;
+      font-weight: 700;
+      font-size: 1.8rem;
+      border-bottom: 2px solid #6b533a;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1.75rem;
+    }
+    .invoice-row {
+      display: flex;
+      margin-bottom: 0.8rem;
+    }
+    .invoice-row > div:first-child {
+      flex: 0 0 160px;
+      font-weight: 700;
+    }
+    .invoice-no-data {
+      font-style: italic;
+      color: #927f55;
+      padding: 1rem 0;
+    }
+
+    /* Responsive small screens */
+    @media (max-width: 480px) {
+      header {
+        font-size: 1.2rem;
+        flex-wrap: wrap;
+      }
+      header nav {
+        margin-top: 0.5rem;
+      }
+      header nav a {
+        margin-left: 1rem;
+        font-size: 0.9rem;
+      }
+      main {
+        margin: 1rem 1rem 3rem;
+      }
+      .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      label {
+        width: 100%;
+        margin-bottom: 0.25rem;
+        flex: none;
+      }
+      input[type="text"],
+      textarea, select {
+        width: 100%;
+      }
+    }
+
+</style>
+
+<body>
+    <div class="main-contaier">
+        <header class="header">
+            <div class="logo">Furnish Store</div>
+            <nav class="navbar">
+                <a href="first.html" class="nav-link">Home</a>
+                <a href="furniture.html" class="nav-link">Furniture</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+        </header>
+
+        <div class="container">
+            <h2>Data Transaksi</h2>
+            <hr>
+        </div>
+
+        <div class="invoice">
+            <label>Nama:</label> <span id="nama"></span>
+        </div>
+        
+        <div>
+            <label>Alamat:</label> <span id="alamat"></span>
+        </div>
+        
+        <div>
+            <label>Barang:</label> <span id="barang"></span>
+        </div>
+        
+        <div>
+            <label>Nama Barang:</label> <span id="nama_barang"></span>
+        </div>
+        
+        <div>
+            <label>Keterangan:</label> <span id="keterangan"></span>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('invoiceForm').addEventListener('submit'), function(event)
+        {
+            event.preventDefault();
+            // Ambil nilai dari form
+            const name = document.getElementById('name').value.trim();
+            const alamat = document.getElementById('alamat').value.trim();
+            const barang = document.getElementById('barang').value;
+            const namaBarang = document.getElementById('namaBarang').value.trim();
+            const keterangan = document.getElementById('keterangan').value.trim();
+            // Buat objek untuk mapping kode barang ke nama lengkap
+            
+            const barangFullName = 
+            {
+                kursi: "Kursi",
+                meja: "Meja",
+                lemari: "Lemari",
+                sofa: "Sofa"
+            }
+
+            // Bangun HTML invoice
+            let invoiceHTML = '';
+            invoiceHTML += '<div class="invoice-row"><div>Nama</div><div>: ' + escapeHtml(name) + '</div></div>';
+            invoiceHTML += '<div class="invoice-row"><div>Alamat</div><div>: ' + escapeHtml(alamat) + '</div></div>';
+            invoiceHTML += '<div class="invoice-row"><div>Barang</div><div>: ' + (barangFullName[barang] || '') + '</div></div>';
+            invoiceHTML += '<div class="invoice-row"><div>Nama Barang</div><div>: ' + escapeHtml(namaBarang) + '</div></div>';
+            // Tampilkan ke bagian invoice
+            const invoiceContent = document.getElementById('invoiceContent');
+            invoiceContent.innerHTML = invoiceHTML;
+        };
+    
+        // Fungsi sederhana escape HTML untuk mencegah XSS
+        function escapeHtml(text) 
+        {
+            const map = 
+            {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+  </script>
+
+</body>
+</html>
